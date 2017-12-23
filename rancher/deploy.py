@@ -1,5 +1,5 @@
+from . import rancher
 import threading
-import rancher
 import time
 
 class DeployThread(threading.Thread):
@@ -9,14 +9,14 @@ class DeployThread(threading.Thread):
         super(DeployThread, self).__init__()
     
     def run(self):
-        while self.rancher.getServiceState(self.service) != rancher.rancher.STATE_ACTIVE:
+        while self.rancher.getServiceState(self.service) != rancher.STATE_ACTIVE:
             print "Some task is deploying, sleeping."
             time.sleep(1)
 
         self.rancher.upgradeService(self.service)
-        while self.rancher.getServiceState(self.service) != rancher.rancher.STATE_UPGRADED:
+        while self.rancher.getServiceState(self.service) != rancher.STATE_UPGRADED:
             time.sleep(1)
             print "Cheacking status error, sleeping."
-            
+
         self.rancher.finishServiceUpgrade(self.service)
         print "Finished deploy, theading down!"
