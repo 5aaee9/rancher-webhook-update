@@ -7,6 +7,7 @@ _JSON_API_HEADER = {
     "Content-Type": "application/json"
 }
 
+STATE_ACTIVE = "active"
 STATE_UPGRADTING = "upgrading"
 STATE_UPGRADED = "upgraded"
 
