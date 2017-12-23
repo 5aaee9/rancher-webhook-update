@@ -27,7 +27,7 @@ Commit Message:
 {}
 
 Rancher agent will auto-depoly this commit
-""".format(self.message['project_name'], self.message['commit']['sha'][:16], self.message['commit']['message'].strip()))
+""".format(self.message['project']['path_with_namespace'], self.message['commit']['id'][:16], self.message['commit']['message'].strip()))
         
         while self.rancher.getServiceState(self.service) != rancher.STATE_ACTIVE:
             print "Some task is deploying, sleeping."
@@ -45,6 +45,6 @@ Rancher agent will auto-depoly this commit
 Commit Id: {}
 
 Changes is deploy to rancher
-""".format(self.message['commit']['sha'][:16]))
+""".format(self.message['commit']['id'][:16]))
 
         print "Finished deploy, theading down!"

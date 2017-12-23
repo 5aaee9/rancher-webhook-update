@@ -11,7 +11,7 @@ def attach(app):
         if not (request.headers.get("X-Gitlab-Token") == config.GITLAB_PASS):
             resp = make_response("Auth Token Error", 401)
             return resp
-        if request.get_json()["build_status"] != "success":
+        if request.get_json()["object_attributes"]["status"] != "success":
             # GitLab is not success
             return make_response("skip", 204)
         rancher_service = service.Service(
