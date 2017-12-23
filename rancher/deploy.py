@@ -23,11 +23,18 @@ class DeployThread(threading.Thread):
             self.sendTelegramMessage("""New commit is pushed and CI is pass
 Project: {}
 Commit Id: {}
+Commit By: {} <{}>
 Commit Message: 
 {}
 
-Rancher agent will auto-depoly this commit
-""".format(self.message['project']['path_with_namespace'], self.message['commit']['id'][:16], self.message['commit']['message'].strip()))
+Rancher agent will auto-deploy this commit
+""".format(
+        self.message['project']['path_with_namespace'], 
+        self.message['commit']['id'][:16], 
+        self.message['commit']['author']['name'],
+        self.message['commit']['author']['email'],
+        self.message['commit']['message'].strip())
+    )
         
         while self.rancher.getServiceState(self.service) != rancher.STATE_ACTIVE:
             print "Some task is deploying, sleeping."
