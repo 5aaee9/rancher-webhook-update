@@ -8,3 +8,4 @@ RANCHER_PROJECT_ID = os.getenv("RANCHER_PROJECT_ID", "")
 RANCHER_SERVICE_ID = os.getenv("RANCHER_SERVICE_ID", "")
 
 WEBHOOK_PASS = os.getenv("WEBHOOK_PASS", "web_pass")
+GITLAB_PASS = os.getenv("GITLAB_PASS", "")
