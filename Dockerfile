@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:2.7.14-alpine3.7
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
