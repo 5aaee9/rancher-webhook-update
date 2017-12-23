@@ -20,6 +20,6 @@ def attach(app):
         rancher_instance = rancher.Rancher(
             config.RANCHER_HOST, config.RANCHER_ACCESS_KEY, config.RANCHER_SCRECT_KEY
         )
-        deploy.DeployThread(rancher_instance, rancher_service).start()
+        deploy.DeployThread(rancher_instance, rancher_service, config).start()
 
         return "Deploy theading started"

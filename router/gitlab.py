@@ -1,4 +1,7 @@
 from flask import make_response
+from rancher import rancher
+from rancher import deploy
+from rancher import service
 from flask import request
 
 def attach(app):
@@ -17,6 +20,8 @@ def attach(app):
         rancher_instance = rancher.Rancher(
             config.RANCHER_HOST, config.RANCHER_ACCESS_KEY, config.RANCHER_SCRECT_KEY
         )
-        deploy.DeployThread(rancher_instance, rancher_service).start()
+        deploy.DeployThread(
+            rancher_instance, rancher_service, config, request.get_json()
+        ).start()
 
         return "Deploy theading started"
