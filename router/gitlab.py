@@ -5,10 +5,10 @@ def attach(app):
     @app.route('/webhook/gitlab', methods=['POST'])
     def gitlab():
         config = app.i_config
-        if not (request.headers.get("x-gitlab-token") == config.GITLAB_PASS):
+        if not (request.headers.get("X-Gitlab-Token") == config.GITLAB_PASS):
             resp = make_response("Auth Token Error", 401)
             return resp
-        if request.get_json()["object_attributes"]["status"] != "success":
+        if request.get_json()["build_status"] != "success":
             # GitLab is not success
             return make_response("skip", 204)
         rancher_service = service.Service(
