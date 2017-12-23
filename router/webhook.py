@@ -1,5 +1,6 @@
 from flask import make_response
 from rancher import rancher
+from rancher import deploy
 from rancher import service
 from flask import request
 import time
@@ -19,11 +20,6 @@ def attach(app):
         rancher_instance = rancher.Rancher(
             config.RANCHER_HOST, config.RANCHER_ACCESS_KEY, config.RANCHER_SCRECT_KEY
         )
+        deploy.DeployThread(rancher_instance, rancher_service).start()
 
-        rancher_instance.upgradeService(rancher_service)
-        while True:
-            if rancher_instance.getServiceState(rancher_service) != rancher.STATE_UPGRADED:
-                time.sleep(0.1)
-            else:
-                rancher_instance.finishServiceUpgrade(rancher_service)
-                return "Success"
+        return "Deploy theading started"
