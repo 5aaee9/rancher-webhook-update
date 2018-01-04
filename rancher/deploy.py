@@ -20,14 +20,14 @@ class DeployThread(threading.Thread):
 
     def run(self):
         if self.message:
-            self.sendTelegramMessage("""New commit is pushed and CI is pass
+            self.sendTelegramMessage("""A new commit has been pushed and CI passed.
 Project: {}
 Commit Id: {}
 Commit By: {} <{}>
 Commit Message: 
 {}
 
-Rancher agent will auto-deploy this commit
+Rancher agent will automatically redeploy to include the changes.
 """.format(
         self.message['project']['path_with_namespace'], 
         self.message['commit']['id'][:16], 
@@ -48,10 +48,10 @@ Rancher agent will auto-deploy this commit
         self.rancher.finishServiceUpgrade(self.service)
 
         if self.message:
-            self.sendTelegramMessage("""Project is finish deploy
+            self.sendTelegramMessage("""Redeployed.
 Commit Id: {}
 
-Changes is deploy to rancher
+Changes have been applied to rancher.
 """.format(self.message['commit']['id'][:16]))
 
         print "Finished deploy, theading down!"
