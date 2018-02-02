@@ -5,8 +5,8 @@ from rancher import service
 from flask import request
 
 def attach(app):
-    @app.route('/webhook/gitlab', methods=['POST'])
-    def gitlab():
+    @app.route('/webhook/gitlab/<projectId>/<serviceId>', methods=['POST'])
+    def gitlab(projectId, serviceId):
         config = app.i_config
         if not (request.headers.get("X-Gitlab-Token") == config.GITLAB_PASS):
             resp = make_response("Auth Token Error", 401)
@@ -15,7 +15,7 @@ def attach(app):
             # GitLab is not success
             return make_response("skip", 204)
         rancher_service = service.Service(
-            config.RANCHER_PROJECT_ID, config.RANCHER_SERVICE_ID
+            projectId, serviceId
         )
         rancher_instance = rancher.Rancher(
             config.RANCHER_HOST, config.RANCHER_ACCESS_KEY, config.RANCHER_SCRECT_KEY
