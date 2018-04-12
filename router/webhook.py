@@ -5,9 +5,10 @@ from rancher import service
 from flask import request
 import time
 
+
 def attach(app):
-    @app.route('/webhook')
-    def webhook():
+    @app.route('/webhook/normal/<projectId>/<serviceId>')
+    def webhook(projectId, serviceId):
         config = app.i_config
         if not (request.headers.get("x-auth-token") == config.WEBHOOK_PASS):
             resp = make_response("Auth Token Error", 401)
@@ -15,7 +16,7 @@ def attach(app):
 
         # Make rancher great again!
         rancher_service = service.Service(
-            config.RANCHER_PROJECT_ID, config.RANCHER_SERVICE_ID
+            projectId, serviceId
         )
         rancher_instance = rancher.Rancher(
             config.RANCHER_HOST, config.RANCHER_ACCESS_KEY, config.RANCHER_SCRECT_KEY
